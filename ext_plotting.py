@@ -97,7 +97,7 @@ def plot_cdf(data: Dict[str, List[float]], linewidth: int = 2) -> None:
     plt.figure(figsize=(10, 6))
     for label, data in plot_data.items():
         plt.plot(data["x"], data["y"], linewidth=linewidth, label=label)
-    plt.title("Aggregated CDF of Throughput (ebits per slot) over 10 Networks")
+    plt.title("Aggregated CDF of Throughput (ebits per slot) ")
     plt.xlabel("Throughput (ebits per slot)")
     plt.ylabel("CDF")
     plt.legend()
