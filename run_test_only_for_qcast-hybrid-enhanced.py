@@ -9,7 +9,8 @@ def main():
     # Metrics for QCASTEnhanced
     enhanced_metrics = {
         'reliability': [],
-        'success_rate': []
+        'success_rate': [],
+        'throughput': []
     }
     
     print(f"\n{'='*80}")
@@ -36,12 +37,30 @@ def main():
         # Store metrics for QCASTEnhanced
         enhanced_metrics['reliability'].append(np.mean(metrics['path_reliability']))
         enhanced_metrics['success_rate'].append(np.mean(metrics['success_rate']))
+        enhanced_metrics['throughput'].append(np.mean(metrics['throughput']))
         
         print(f"Results for {num_nodes} nodes:")
         print(f"  • Average Throughput: {np.mean(metrics['throughput']):.2f} EPRs/slot")
         print(f"  • Average Success Rate: {np.mean(metrics['success_rate']):.2f}%")
         print(f"  • Average Path Length: {np.mean(metrics['path_length']):.2f} hops")
         print(f"  • Average Recovery Success: {np.mean(metrics['recovery_success']):.2f}%")
+
+    # Create throughput vs nodes graph for QCASTEnhanced
+    plt.figure(figsize=(10, 6))
+    plt.plot(node_counts, enhanced_metrics['throughput'], 'go-', linewidth=2, markersize=8)
+    plt.title('QCASTEnhanced: Throughput vs Network Size', fontsize=14)
+    plt.xlabel('Number of Nodes', fontsize=12)
+    plt.ylabel('Throughput (EPRs/slot)', fontsize=12)
+    plt.grid(True, linestyle='--', alpha=0.7)
+    
+    # Add data labels
+    for i, throughput in enumerate(enhanced_metrics['throughput']):
+        plt.text(node_counts[i], throughput, f'{throughput:.2f}', 
+                ha='center', va='bottom')
+    
+    plt.tight_layout()
+    plt.savefig('qcastenhanced_throughput.png', dpi=300, bbox_inches='tight')
+    plt.close()
 
     # Create reliability vs nodes graph for QCASTEnhanced
     plt.figure(figsize=(10, 6))
